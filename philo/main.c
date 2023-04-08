@@ -6,11 +6,28 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 18:28:16 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/08 12:21:32 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:22:02 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+// int	check_all_forks_status(t_info *info)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	///must del function
+// 	while(i < info->philo_num)
+// 	{
+// 		if (info->forks[i].status != 0 && info->forks[i].status != 1)
+// 		{
+// 			write(2, "mutext error!!!\n", 15);
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 int	check_all_philo_eat(t_philo *philo)
 {

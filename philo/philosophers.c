@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:51:35 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/08 12:53:55 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:14:18 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ void	put_down_fork(t_philo *philo)
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 
-	right_fork = &philo->info->forks[philo->num - 1];
-	left_fork = &philo->info->forks[philo->num % philo->info->philo_num];
+	right_fork = &philo->info->forks[philo->num - 1].mutex;
+	left_fork = &philo->info->forks[philo->num % philo->info->philo_num].mutex;
 	pthread_mutex_unlock(left_fork);
 	pthread_mutex_unlock(right_fork);
 	philo->last_eat = nowtime();
 	philo->cnt_eat++;
+	philo->info->forks[philo->num - 1].status--;
+	philo->info->forks[philo->num % philo->info->philo_num].status--;
 }
 
 void	pick_fork(t_philo *philo)
@@ -32,12 +34,13 @@ void	pick_fork(t_philo *philo)
 
 	if (!philo->info->live)
 		return ;
-	right_fork = &philo->info->forks[philo->num - 1];
-	left_fork = &philo->info->forks[philo->num % philo->info->philo_num];
-	// printf("%d %d\n",philo->num - 1,philo->num % philo->info->philo_num);
+	right_fork = &philo->info->forks[philo->num - 1].mutex;
+	left_fork = &philo->info->forks[philo->num % philo->info->philo_num].mutex;
 	pthread_mutex_lock(right_fork);
 	pthread_mutex_lock(left_fork);
 	print_state(philo, 1);
+	philo->info->forks[philo->num - 1].status++;
+	philo->info->forks[philo->num % philo->info->philo_num].status++;
 }
 
 void	waiting(int time, t_philo *philo)
