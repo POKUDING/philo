@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 18:28:47 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/05 14:26:44 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/08 02:58:23 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 # define PHILO_H
 
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef struct s_info
 {
@@ -25,25 +27,36 @@ typedef struct s_info
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
+	long			start_time;
+	int				live;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
 }	t_info;
 
 typedef struct s_philo
 {
-	int		num;
-	t_info	*info;
+	int				num;
+	int				cnt_eat;
+	long			last_eat;
+	pthread_t		thread;
+	t_info			*info;
 }	t_philo;
 
-int		init_info(t_info *info, char **av, int ac);
+int		init_info(t_info *info, t_philo **philo, char **av, int ac);
 int		init_mutex(t_info *info);
 
 int		ft_atoi(const char *nptr);
 int		ft_isdigit(char	*s);
 void	*ft_calloc(size_t num, size_t size);
 
-void	philosopher(void *philo);
+void	*philosopher(void *philo);
 void	pick_fork(t_philo *philo);
 void	put_down_fork(t_philo *philo);
+
+void	print_state(t_philo *philo, int state);
+long	nowtime(void);
+
+void	free_info(t_info *info);
+void	free_all(t_philo *philo);
 
 #endif
