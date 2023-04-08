@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:19:25 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/08 03:02:49 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:40:21 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,13 @@ void	print_state(t_philo *philo, int state)
 {
 	int	time;
 
-	if (!philo->info->live)
-		return ;
 	time = nowtime() - philo->info->start_time;
 	pthread_mutex_lock(&philo->info->print);
+	if (!check_live(philo->info, 0))
+	{
+		pthread_mutex_unlock(&philo->info->print);
+		return ;
+	}
 	if (state == 1)
 		printf("%d %d has taken a fork\n", time, philo->num);
 	else if (state == 2)
@@ -86,7 +89,7 @@ void	print_state(t_philo *philo, int state)
 	else if (state == 5)
 	{
 		printf("%d %d died\n", time, philo->num);
-		philo->info->live = 0;
+		check_live(philo->info, 1);
 	}
 	pthread_mutex_unlock(&philo->info->print);
 }

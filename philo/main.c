@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 18:28:16 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/08 13:22:02 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:42:38 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,21 @@
 // 	}
 // 	return (0);
 // }
+int	check_live(t_info *info, int mode)
+{
+	int	rtn;
+
+	pthread_mutex_lock(&info->use_live);
+	if (mode == 0)
+		rtn = info->live;
+	else if (mode == 1)
+	{
+		info->live = 0;
+		rtn = info->live;
+	}
+	pthread_mutex_unlock(&info->use_live);
+	return (rtn);
+}
 
 int	check_all_philo_eat(t_philo *philo)
 {
@@ -53,12 +68,9 @@ void	monitoring(t_info *info, t_philo *philo)
 		while (i < info->philo_num)
 		{
 			if (nowtime() - philo[i].last_eat >= info->time_to_die)
-			{
 				print_state(&philo[i], 5);
-				info->live = 0;
-			}
 			else if (info->must_eat > 0 && check_all_philo_eat(philo))
-				info->live = 0;
+				check_live(info, 1);
 			i++;
 		}
 	}
@@ -76,7 +88,8 @@ int	run_thread(t_philo *philo, t_info *info)
 		philo[i].last_eat = info->start_time;
 		philo[i].info = info;
 		philo[i].cnt_eat = 0;
-		pthread_create(&philo[i].thread, 0, philosopher, &philo[i]);
+		if (pthread_create(&philo[i].thread, 0, philosopher, &philo[i]))
+			return (1);
 		i++;
 	}
 	monitoring(info, philo);
@@ -87,15 +100,15 @@ int	main(int ac, char *av[])
 {
 	t_info		info;
 	t_philo		*philo;
-	int			err;
 
+	memset(&info, 0, sizeof(t_info));
+	philo = NULL;
 	if (ac < 5 || ac > 6 || init_info(&info, &philo, av, ac))
-		err = write(2, "argument error\n", 15);
-	if (!err && init_mutex(&info))
-		err = write(2, "init_err\n", 8);
-	run_thread(philo, &info);
+		return (error_control("argument error\n", philo));
+	if (init_mutex(&info))
+		return (error_control("init_err\n", philo));
+	if (run_thread(philo, &info))
+		return (error_control("run_thread error\n", philo));
 	free_all(philo);
-	if (err)
-		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 18:32:38 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/08 13:10:18 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/08 16:13:20 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	init_mutex(t_info *info)
 	int	i;
 
 	i = 0;
-	if (pthread_mutex_init(&info->print, 0))
+	if (pthread_mutex_init(&info->print, 0) || \
+		pthread_mutex_init(&info->use_live, 0))
 		return (1);
 	info->forks = (t_fork *)ft_calloc(sizeof(t_fork), info->philo_num);
 	if (!info->forks)
