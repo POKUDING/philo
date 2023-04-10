@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:07:16 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/10 18:29:33 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/10 19:53:32 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,14 @@ void	free_info(t_info *info)
 	int	i;
 
 	i = 0;
-	pthread_mutex_destroy(&info->print);
-	pthread_mutex_destroy(&info->use_live);
-	while (i < info->philo_num)
+	if (info->print)
+		pthread_mutex_destroy(info->print);
+	if (info->use_live)
+		pthread_mutex_destroy(info->use_live);
+	while (i < info->philo_num && &info->forks[i])
 		pthread_mutex_destroy(&info->forks[i++].mutex);
+	free(info->print);
+	free(info->use_live);
 	free(info->forks);
 }
 

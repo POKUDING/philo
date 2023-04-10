@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:51:35 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/10 18:18:41 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/10 19:12:29 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ void	pick_fork(t_philo *philo)
 
 void	waiting(int time, t_philo *philo)
 {
-	int	i;
-
-	i = 0;
 	while (nowtime() - philo->last_status < time && check_live(philo->info, 0))
 		usleep(100);
 }

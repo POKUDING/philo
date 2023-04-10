@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 18:19:58 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/10 18:21:38 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/10 19:53:11 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	print_state(t_philo *philo, int state)
 {
 	int	time;
 
-	pthread_mutex_lock(&philo->info->print);
+	pthread_mutex_lock(philo->info->print);
 	time = nowtime() - philo->info->start_time;
 	if (!check_live(philo->info, 0))
 	{
-		pthread_mutex_unlock(&philo->info->print);
+		pthread_mutex_unlock(philo->info->print);
 		return ;
 	}
 	else if (state == 1)
@@ -55,7 +55,7 @@ void	print_state(t_philo *philo, int state)
 		philo->status = state;
 		philo->last_status = nowtime();
 	}
-	pthread_mutex_unlock(&philo->info->print);
+	pthread_mutex_unlock(philo->info->print);
 }
 
 int	check_live(t_info *info, int mode)
@@ -65,16 +65,16 @@ int	check_live(t_info *info, int mode)
 	rtn = 0;
 	if (mode == 0)
 	{
-		pthread_mutex_lock(&info->use_live);
+		pthread_mutex_lock(info->use_live);
 		rtn = info->live;
-		pthread_mutex_unlock(&info->use_live);
+		pthread_mutex_unlock(info->use_live);
 	}
 	else if (mode == 1)
 	{
-		pthread_mutex_lock(&info->use_live);
+		pthread_mutex_lock(info->use_live);
 		info->live = 0;
 		rtn = info->live;
-		pthread_mutex_unlock(&info->use_live);
+		pthread_mutex_unlock(info->use_live);
 	}
 	return (rtn);
 }

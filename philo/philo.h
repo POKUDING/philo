@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 18:28:47 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/10 18:25:04 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/10 19:38:55 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct s_info
 	long			start_time;
 	int				live;
 	struct s_fork	*forks;
-	pthread_mutex_t	use_live;
-	pthread_mutex_t	print;
+	pthread_mutex_t	*use_live;
+	pthread_mutex_t	*print;
 }	t_info;
 
 typedef struct s_philo

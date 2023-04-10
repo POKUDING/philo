@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:19:25 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/10 18:31:51 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/10 19:52:26 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	ft_atoi(const char *nptr)
 		res = (res * 10) + (nptr[i] - '0');
 		i++;
 	}
+	if (res > 2147483647)
+		return (-1);
 	return (mns * (int)res);
 }
 
@@ -60,10 +62,10 @@ int	ft_isdigit(char	*s)
 	{
 		if (s[i] < '0' || s[i] > '9')
 			return (0);
-		if (i == 9 && (s[i] > '7' || s[i + 1] != 0))
-			return (0);
 		i++;
 	}
+	if (i > 10)
+		return (0);
 	return (1);
 }
 
