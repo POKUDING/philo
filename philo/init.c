@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 18:32:38 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/10 20:09:14 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/11 02:34:51 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ int	init_mutex(t_info *info)
 		return (1);
 	while (i < info->philo_num)
 	{
-		if (pthread_mutex_init(&info->forks[i++].mutex, 0))
+		if (pthread_mutex_init(&info->forks[i].mutex, 0))
 			return (1);
+		i++;
 	}
 	return (0);
 }

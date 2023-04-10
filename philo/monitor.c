@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 18:19:58 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/10 20:26:55 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/11 02:38:23 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ void	print_state(t_philo *philo, int state)
 	else if (state == 4)
 		printf("%d %d is thinking\n", time, philo->num);
 	else if (state == 5)
+	{
 		printf("%d %d died\n", time, philo->num);
+		check_live(philo->info, 1);
+	}
 	if (state != 5)
 	{
 		philo->status = state;
@@ -93,7 +96,6 @@ void	monitoring(t_info *info, t_philo *philo)
 			if (nowtime() - philo[i].last_eat >= info->time_to_die)
 			{
 				print_state(&philo[i], 5);
-				check_live(info, 1);
 			}
 			else if (info->must_eat > 0 && check_all_philo_eat(philo))
 				check_live(info, 1);

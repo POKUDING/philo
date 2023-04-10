@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:51:35 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/10 20:21:11 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/11 03:26:49 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	put_down_fork(t_philo *philo)
 
 	right_fork = &philo->info->forks[philo->num - 1].mutex;
 	left_fork = &philo->info->forks[philo->num % philo->info->philo_num].mutex;
-	philo->info->forks[philo->num - 1].status--;
-	philo->info->forks[philo->num % philo->info->philo_num].status--;
+	philo->info->forks[philo->num - 1].status -= 1;
+	philo->info->forks[philo->num % philo->info->philo_num].status -= 1;
 	if (right_fork == left_fork)
 		return ;
 	pthread_mutex_unlock(left_fork);
@@ -51,8 +51,9 @@ void	pick_fork(t_philo *philo)
 	}
 	pthread_mutex_lock(left_fork);
 	print_state(philo, 1);
-	philo->info->forks[philo->num - 1].status++;
-	philo->info->forks[philo->num % philo->info->philo_num].status++;
+	usleep(100);
+	philo->info->forks[philo->num - 1].status += 1;
+	philo->info->forks[philo->num % philo->info->philo_num].status += 1;
 }
 
 void	waiting(int time, t_philo *philo)
