@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 18:28:47 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/08 17:17:57 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/09 17:16:26 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	*ft_calloc(size_t num, size_t size);
 void	print_state(t_philo *philo, int state);
 long	nowtime(void);
 
-int		error_control(char *str, t_philo *philo);
+int		error_control(char *str, t_philo *philo, t_info *info);
 void	free_info(t_info *info);
-void	free_all(t_philo *philo);
+void	free_all(t_philo *philo, t_info *info);
 
 
 #endif

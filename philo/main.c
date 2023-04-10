@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 18:28:16 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/08 17:42:38 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/09 17:16:10 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,11 @@ int	main(int ac, char *av[])
 	memset(&info, 0, sizeof(t_info));
 	philo = NULL;
 	if (ac < 5 || ac > 6 || init_info(&info, &philo, av, ac))
-		return (error_control("argument error\n", philo));
+		return (error_control("argument error\n", philo, &info));
 	if (init_mutex(&info))
-		return (error_control("init_err\n", philo));
+		return (error_control("init_err\n", philo, &info));
 	if (run_thread(philo, &info))
-		return (error_control("run_thread error\n", philo));
-	free_all(philo);
+		return (error_control("run_thread error\n", philo, &info));
+	free_all(philo, &info);
 	return (0);
 }

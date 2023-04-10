@@ -6,20 +6,19 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:07:16 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/08 17:43:10 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/09 17:15:01 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	error_control(char *str, t_philo *philo)
+int	error_control(char *str, t_philo *philo, t_info *info)
 {
 	if (philo && philo->thread)
 		check_live(philo->info, 1);
 	while(str && *str)
 		write(2, str++, 1);
-	if (philo)
-		free_all(philo);
+	free_all(philo, info);
 	return (1);
 }
 
@@ -35,14 +34,14 @@ void	free_info(t_info *info)
 	free(info->forks);
 }
 
-void	free_all(t_philo *philo)
+void	free_all(t_philo *philo, t_info *info)
 {
 	int		i;
 	void	*tmp;
 
 	i = 0;
-	while (i < philo->info->philo_num && philo[i].thread)
+	while (i < info->philo_num && philo[i].thread)
 		pthread_join(philo[i++].thread, &tmp);
-	free_info(philo->info);
+	free_info(info);
 	free(philo);
 }
