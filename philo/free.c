@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:07:16 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/09 17:15:01 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/10 18:29:33 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	error_control(char *str, t_philo *philo, t_info *info)
 {
 	if (philo && philo->thread)
 		check_live(philo->info, 1);
-	while(str && *str)
+	while (str && *str)
 		write(2, str++, 1);
 	free_all(philo, info);
 	return (1);
@@ -40,7 +40,7 @@ void	free_all(t_philo *philo, t_info *info)
 	void	*tmp;
 
 	i = 0;
-	while (i < info->philo_num && philo[i].thread)
+	while (i < info->philo_num && philo && philo[i].thread)
 		pthread_join(philo[i++].thread, &tmp);
 	free_info(info);
 	free(philo);

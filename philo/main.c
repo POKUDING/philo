@@ -6,75 +6,11 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 18:28:16 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/09 17:16:10 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/10 18:20:56 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// int	check_all_forks_status(t_info *info)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	///must del function
-// 	while(i < info->philo_num)
-// 	{
-// 		if (info->forks[i].status != 0 && info->forks[i].status != 1)
-// 		{
-// 			write(2, "mutext error!!!\n", 15);
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
-int	check_live(t_info *info, int mode)
-{
-	int	rtn;
-
-	pthread_mutex_lock(&info->use_live);
-	if (mode == 0)
-		rtn = info->live;
-	else if (mode == 1)
-	{
-		info->live = 0;
-		rtn = info->live;
-	}
-	pthread_mutex_unlock(&info->use_live);
-	return (rtn);
-}
-
-int	check_all_philo_eat(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->info->philo_num)
-	{
-		if (philo[i].cnt_eat < philo->info->must_eat)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	monitoring(t_info *info, t_philo *philo)
-{
-	int		i;
-
-	while (info->live)
-	{
-		i = 0;
-		while (i < info->philo_num)
-		{
-			if (nowtime() - philo[i].last_eat >= info->time_to_die)
-				print_state(&philo[i], 5);
-			else if (info->must_eat > 0 && check_all_philo_eat(philo))
-				check_live(info, 1);
-			i++;
-		}
-	}
-}
 
 int	run_thread(t_philo *philo, t_info *info)
 {
@@ -86,8 +22,11 @@ int	run_thread(t_philo *philo, t_info *info)
 	{
 		philo[i].num = i + 1;
 		philo[i].last_eat = info->start_time;
+		philo[i].last_status = info->start_time;
 		philo[i].info = info;
 		philo[i].cnt_eat = 0;
+		philo[i].status = 0;
+		pthread_mutex_init(&philo[i].use_philo, 0);
 		if (pthread_create(&philo[i].thread, 0, philosopher, &philo[i]))
 			return (1);
 		i++;

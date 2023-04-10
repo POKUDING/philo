@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:19:25 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/08 17:40:21 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/10 18:31:51 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,38 +60,11 @@ int	ft_isdigit(char	*s)
 	{
 		if (s[i] < '0' || s[i] > '9')
 			return (0);
-		if (i == 8 && (s[i] > '7' || s[i + 1]))
+		if (i == 9 && (s[i] > '7' || s[i + 1] != 0))
 			return (0);
 		i++;
 	}
 	return (1);
-}
-
-void	print_state(t_philo *philo, int state)
-{
-	int	time;
-
-	time = nowtime() - philo->info->start_time;
-	pthread_mutex_lock(&philo->info->print);
-	if (!check_live(philo->info, 0))
-	{
-		pthread_mutex_unlock(&philo->info->print);
-		return ;
-	}
-	if (state == 1)
-		printf("%d %d has taken a fork\n", time, philo->num);
-	else if (state == 2)
-		printf("%d %d is eating\n", time, philo->num);
-	else if (state == 3)
-		printf("%d %d is sleeping\n", time, philo->num);
-	else if (state == 4)
-		printf("%d %d is thinking\n", time, philo->num);
-	else if (state == 5)
-	{
-		printf("%d %d died\n", time, philo->num);
-		check_live(philo->info, 1);
-	}
-	pthread_mutex_unlock(&philo->info->print);
 }
 
 long	nowtime(void)

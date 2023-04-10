@@ -6,15 +6,15 @@
 #    By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/22 15:36:43 by junhyupa          #+#    #+#              #
-#    Updated: 2023/04/08 03:03:36 by junhyupa         ###   ########.fr        #
+#    Updated: 2023/04/10 18:26:18 by junhyupa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = -Werror -Wextra -Wall -g -fsanitize=address
+CFLAGS = -Werror -Wextra -Wall -g -fsanitize=thread
 
-SRC = main.c init.c philosophers.c util.c free.c
+SRC = main.c init.c philosophers.c util.c free.c monitor.c
 
 SRCS = $(SRC)
 
