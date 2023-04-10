@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 18:28:47 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/10 19:38:55 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:14:04 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_philo
 {
 	int				num;
 	int				cnt_eat;
+	int				im_full;
 	int				status;
 	long			last_eat;
 	long			last_status;

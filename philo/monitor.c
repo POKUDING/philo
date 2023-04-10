@@ -6,28 +6,11 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 18:19:58 by junhyupa          #+#    #+#             */
-/*   Updated: 2023/04/10 19:53:11 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:26:55 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	check_all_forks_status(t_info *info)
-{
-	int	i;
-
-	i = 0;
-	///must del function
-	while(i < info->philo_num)
-	{
-		if (info->forks[i].status != 0 && info->forks[i].status != 1)
-		{
-			write(2, "mutext error!!!\n", 15);
-		}
-		i++;
-	}
-	return (0);
-}
 
 void	print_state(t_philo *philo, int state)
 {
@@ -82,15 +65,17 @@ int	check_live(t_info *info, int mode)
 int	check_all_philo_eat(t_philo *philo)
 {
 	int	i;
+	int	flag;
 
 	i = 0;
-	while (i < philo->info->philo_num)
+	flag = 1;
+	while (flag && i < philo->info->philo_num)
 	{
-		if (philo[i].cnt_eat < philo->info->must_eat)
-			return (0);
+		if (!philo[i].im_full)
+			flag = 0;
 		i++;
 	}
-	return (1);
+	return (flag);
 }
 
 void	monitoring(t_info *info, t_philo *philo)
@@ -103,6 +88,8 @@ void	monitoring(t_info *info, t_philo *philo)
 		while (i < info->philo_num)
 		{
 			pthread_mutex_lock(&philo[i].use_philo);
+			if (info->must_eat > 0 && philo[i].cnt_eat >= info->must_eat)
+				philo[i].im_full = 1;
 			if (nowtime() - philo[i].last_eat >= info->time_to_die)
 			{
 				print_state(&philo[i], 5);
